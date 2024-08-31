@@ -1,5 +1,6 @@
 
 import google.cloud.pubsub as pubsub
+import json
 
 class DatastoreObserver:
     def __init__(self, datastore_client):
@@ -33,3 +34,4 @@ class DatastoreObserver:
     def handle_query(self, query):
         # Process the query and return results
         return 0;
+

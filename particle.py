@@ -4,8 +4,7 @@ class Particle:
         self.position = position
         self.velocity = velocity
 
-    def update_position(self,   
- dt):
+    def update_position(self, dt):
         self.position += self.velocity * dt
 
     def update_velocity(self, force, dt):
