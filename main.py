@@ -1,18 +1,14 @@
-import qutip as qt
+from simulation import Simulation
+from datastore import DataStore
+from datastore_observer import DatastoreObserver
 
+def main():
+    datastore_client = DataStore()
+    datastore_observer = DatastoreObserver(datastore_client)
+    datastore_observer.start()
 
-import Particle
-import Atom
-import Molecule
-import DataStoreObserver
-import Simulation
+    simulation = Simulation(datastore_client)
+    simulation.run(num_steps)
 
-
-# Example usage
-atom1 = Atom(1, 1.0, [0, 0, 0], [1, 0, 0])
-atom2 = Atom(8, 16.0, [1, 1, 0], [0, 1, 0])
-
-molecule = Molecule([atom1, atom2])
-simulation = Simulation(molecule)
-
-simulation.run(100, 0.1)
+if __name__ == "__main__":
+    main()

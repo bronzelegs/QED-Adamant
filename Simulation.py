@@ -1,13 +1,15 @@
 
-# simulation.py
+from molecule import Molecule
+from datastore import DataStore
+from datastore_observer import DatastoreObserver
+
 class Simulation:
-    def __init__(self, data_store, pubsub_client):
-        self.data_store = data_store
-        self.pubsub_client = pubsub_client
+    def __init__(self, datastore_client):
+        self.datastore_client = datastore_client
+        self.molecules = []
 
     def run(self, num_steps):
         # ... (simulation logic)
-        self.data_store.store_results(simulation_results)
-        self.pubsub_client.publish_event("simulation_complete")
 
-
+        # Store results in datastore
+        self.data

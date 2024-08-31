@@ -1,3 +1,5 @@
+from particle import Particle
+
 class Molecule:
     def __init__(self, atoms):
         self.atoms = atoms
@@ -27,4 +29,4 @@ class Molecule:
     def calculate_interaction_force(self, atom1, atom2):
         # Implement interaction force calculation (e.g., Lennard-Jones potential)
         #
-	return 0;
+        return 0
