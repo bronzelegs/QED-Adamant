@@ -1,4 +1,4 @@
-from particle import Particle
+from Particle import Particle
 
 class Molecule:
     def __init__(self, atoms):

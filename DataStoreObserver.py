@@ -1,6 +1,4 @@
-
-import google.cloud.pubsub as pubsub
-import json
+import google.cloud.pubsub_v1 as pubsub
 
 class DatastoreObserver:
     def __init__(self, datastore_client):
@@ -10,7 +8,20 @@ class DatastoreObserver:
         )
 
     def start(self):
-        self.subscriber.subscribe(self.subscription_path, callback=self.handle_event)
+        self.subscriber = self.datastore_client.subscribe(
+            self.subscription_path, callback=self.handle_event
+        )
+
+        # Start the subscription loop
+        with self.subscriber:
+            while True:
+                try:
+                    message = self.subscriber.receive(timeout=30)  # 30-second timeout
+                    if message:
+                        self.handle_event(message)
+                        self.subscriber.acknowledge(message)
+                except Exception as e:
+                    print(f"Error receiving message: {e}")
 
     def handle_event(self, message):
         data = json.loads(message.data)
@@ -24,14 +35,22 @@ class DatastoreObserver:
             self.destroy_datastore()
 
     def initialize_datastore(self):
-        # Initialize the datastore (e.g., create collections, indexes)
-        return 0;
+        # Create or initialize the datastore
+        # ...
+        return
+
 
     def update_datastore(self, results):
         # Store simulation results in the datastore
-        return 0;
+        # ...
+        return
 
     def handle_query(self, query):
         # Process the query and return results
-        return 0;
+        # ...
+        return
 
+    def destroy_datastore(self):
+        # Clean up the datastore (e.g., close connections)
+        # ...
+        return
