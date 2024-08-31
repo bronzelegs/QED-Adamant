@@ -1,4 +1,4 @@
-from particle import Particle
+from Particle import Particle
 
 class Atom(Particle):
     def __init__(self, atomic_number, mass, position, velocity, charge=0):

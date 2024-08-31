@@ -1,13 +1,14 @@
 
-import Simulation
 from google.cloud import firestore
-from DataStore import DataStore
+
 import DataStoreObserver
+import Simulation
+from DataStoreObserver import DataStoreObserver
+
 
 def main():
-    datastore = DataStore("my_simulation_data", "simulation_results")
+    datastore_observer = DataStoreObserver
     datastore_client = firestore.Client()
-    datastore_observer = DataStoreObserver(datastore_client)
     datastore_observer.start()
 
     simulation = Simulation.Simulation(datastore_client)
