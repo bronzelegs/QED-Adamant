@@ -7,6 +7,8 @@ from DataStoreObserver import DataStoreObserver
 
 
 def main():
+    num_steps = 1
+
     datastore_observer = DataStoreObserver
     datastore_client = firestore.Client()
     datastore_observer.start()

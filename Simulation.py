@@ -3,8 +3,10 @@ class Simulation:
         self.datastore_client = datastore_client
         self.molecules = []
 
-    def run(self, num_steps):
-        # ... (simulation logic)
+def run_simulation():
+    # ... (simulation logic)
 
-        # Store results in datastore
-        self.data
+    # Publish simulation results to Pub/Sub
+    publisher = pubsub_v1.PublisherClient()
+    topic_path = publisher.topic_path("your-project-id", "simulation_results")
+    publisher.publish(topic_path, data=json.dumps(results).encode("utf-8"))
