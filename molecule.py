@@ -1,6 +1,5 @@
 # molecule.py
 
-
 class Molecule(Simulation):
     def __init__(self, atoms, electrons):
         super().__init__()

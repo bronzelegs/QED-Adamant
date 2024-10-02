@@ -1,7 +1,5 @@
-# electron.py
 import numpy as np
 
-import atom as Atom
 from eigenvector import Eigenvector
 
 
@@ -25,5 +23,3 @@ class Electron(Atom):
         for atom in self.atoms:
             force = atom.calculate_force_on_electron(self)
             self.velocity += force * dt / self.mass  # Apply force using Newton's second law
-
-        # ... (other updates)

@@ -1,7 +1,6 @@
 # mongodb_interface.py
 import pymongo
 
-
 class MongoDBInterface:
     def __init__(self, database_name, collection_name):
         self.client = pymongo.MongoClient("mongodb://localhost:27017/")  # Replace with your MongoDB connection string

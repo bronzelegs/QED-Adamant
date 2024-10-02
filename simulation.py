@@ -4,7 +4,7 @@ import threading
 from performance_monitoring_observer import PerformanceMonitoringObserver
 from visualization_data import VisualizationData
 
-from visualizationdata import visualize_data
+from visualization import visualize_data
 
 
 class Simulation(VisualizationData):
@@ -65,12 +65,11 @@ class Simulation(VisualizationData):
     def stop(self):
         self.state = "Stopped"
 
-
 # Example usage:
 def create_molecules():
     # ... (Implementation to create molecules)
 
-    molecules = create_molecules()  # Create a list of molecules
-    simulation = Simulation(molecules, sync_variable=True)
+molecules = create_molecules()  # Create a list of molecules
+simulation = Simulation(molecules, sync_variable=True)
 
 # ... (Start the simulation, use pause, resume, and stop as needed)

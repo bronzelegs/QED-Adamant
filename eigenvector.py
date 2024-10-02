@@ -1,7 +1,6 @@
 # eigenvector.py
 import numpy as np
 
-
 class Eigenvector:
     def __init__(self, wavefunction_coefficients):
         self.coefficients = wavefunction_coefficients
