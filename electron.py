@@ -3,9 +3,8 @@ import numpy as np
 from eigenvector import Eigenvector
 
 
-class Electron(Atom):
+class Electron:
     def __init__(self, mass, position, velocity, charge=-1, wavefunction_coefficients=None):
-        super().__init__()
         self.mass = mass
         self.position = np.array(position)  # Store position as a NumPy array
         self.velocity = np.array(velocity)  # Store velocity as a NumPy array
@@ -23,3 +22,5 @@ class Electron(Atom):
         for atom in self.atoms:
             force = atom.calculate_force_on_electron(self)
             self.velocity += force * dt / self.mass  # Apply force using Newton's second law
+
+        # ... (other updates)

@@ -1,21 +1,21 @@
-# simulation.py
 import threading
 
+from datastore_observer import DataStoreObserver
 from performance_monitoring_observer import PerformanceMonitoringObserver
 from visualization_data import VisualizationData
 
 from visualization import visualize_data
 
 
-class Simulation(VisualizationData):
+class Simulation:
     def __init__(self, molecules, sync_variable):
-        super().__init__()
         self.molecules = molecules
         self.sync_variable = sync_variable
         self.sync_event = threading.Event()
         self.state = "Initialized"
         self.performance_observer = PerformanceMonitoringObserver()
         self.visualization_data = VisualizationData()
+        self.datastore_observer = DataStoreObserver()  # Add DataStoreObserver instance
 
     def run(self, num_steps, dt):
         self.state = "Running"
@@ -40,19 +40,22 @@ class Simulation(VisualizationData):
             # Visualize the data
             visualize_data(self.visualization_data)
 
+            # Store simulation results
+            self.datastore_observer.store_results(self.visualization_data)  # Store results to MongoDB
+
         for thread in threads:
             thread.join()
         self.state = "Stopped"
 
     def update_visualization_data(self):
         # Update visualization data from molecules
-        self.electron_positions = []
-        self.atom_positions = []
+        self.visualization_data.electron_positions = []
+        self.visualization_data.atom_positions = []
         for molecule in self.molecules:
             for atom in molecule.atoms:
-                self.atom_positions.append(atom.position)
+                self.visualization_data.atom_positions.append(atom.position)
             for electron in molecule.electrons:
-                self.electron_positions.append(electron.position)
+                self.visualization_data.electron_positions.append(electron.position)
 
     def pause(self):
         if self.state == "Running":

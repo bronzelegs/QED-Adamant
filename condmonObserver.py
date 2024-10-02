@@ -1,4 +1,3 @@
-# condition_monitoring_observer.py
 class ConditionMonitoringObserver:
     def __init__(self):
         self.temperature_threshold = 1000

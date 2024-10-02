@@ -1,4 +1,3 @@
-# eigenvector.py
 import numpy as np
 
 class Eigenvector:

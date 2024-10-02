@@ -1,6 +1,4 @@
-# visualization.py
 import mayavi.mlab as mlab
-
 
 def visualize_data(visualization_data):
     mlab.clf()  # Clear previous plot

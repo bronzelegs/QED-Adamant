@@ -1,6 +1,4 @@
-# performance_monitoring_observer.py
 import psutil
-
 
 class PerformanceMonitoringObserver:
     def __init__(self):

@@ -1,17 +1,16 @@
-# atom.py
 import numpy as np
 
 from constants import COULOMB_CONSTANT  # Import Coulomb's constant
 
 
-class Atom(Molecule):
+class Atom:
     def __init__(self, atomic_number, mass, position, velocity, charge=0):
-        super().__init__()
         self.atomic_number = atomic_number
         self.mass = mass
         self.position = np.array(position)  # Store position as a NumPy array
         self.velocity = np.array(velocity)  # Store velocity as a NumPy array
         self.charge = charge
+        self.electrons = []  # Initialize list of electrons
 
     def update(self, dt):
         # Implement the update logic for the atom based on forces and physics
@@ -27,3 +26,6 @@ class Atom(Molecule):
         force_direction = distance_vector / distance
         force = force_magnitude * force_direction
         return force
+
+    def add_electron(self, electron):
+        self.electrons.append(electron)

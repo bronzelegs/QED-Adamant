@@ -1,4 +1,3 @@
-# mongodb_interface.py
 import pymongo
 
 class MongoDBInterface:

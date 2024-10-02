@@ -1,4 +1,3 @@
-# visualization_data.py
 class VisualizationData:
     def __init__(self):
         self.electron_positions = []

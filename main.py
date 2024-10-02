@@ -1,10 +1,11 @@
-# main.py
+rom
+simulation
 import time
 
+import Simulation
+import create_molecules
 from condition_monitoring_observer import ConditionMonitoringObserver
 from datastore_observer import DataStoreObserver
-
-from simulation import Simulation, create_molecules
 
 if __name__ == "__main__":
     # Create molecules
@@ -28,4 +29,4 @@ if __name__ == "__main__":
         time.sleep(0.1)  # Simulate time passing
 
     # Example of storing results (for datastore observer)
-    datastore_observer.store_results(simulation.electron_positions)  # Store results to MongoDB
+    datastore_observer.store_results(simulation.visualization_data)  # Store results to MongoDB
