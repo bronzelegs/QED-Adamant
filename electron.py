@@ -6,21 +6,16 @@ from eigenvector import Eigenvector
 class Electron:
     def __init__(self, mass, position, velocity, charge=-1, wavefunction_coefficients=None):
         self.mass = mass
-        self.position = np.array(position)  # Store position as a NumPy array
-        self.velocity = np.array(velocity)  # Store velocity as a NumPy array
+        self.position = np.array(position)
+        self.velocity = np.array(velocity)
         self.charge = charge
-        if wavefunction_coefficients is not None:
+        if wavefunction_coefficients is not None:  # Corrected conditional check
             self.eigenvector = Eigenvector(wavefunction_coefficients)
 
-    def update(self, dt):
-        # Implement the update logic for the electron based on forces and physics
-        # For example, you might update position and velocity here:
-        self.position += self.velocity * dt  # Update position based on velocity
-        # ... (Other updates based on forces or other calculations)
+    def update(self, dt, atoms):  # Add atoms as a parameter
+        self.position += self.velocity * dt
 
         # Calculate force due to atoms
-        for atom in self.atoms:
+        for atom in atoms:  # Iterate over the provided atoms list
             force = atom.calculate_force_on_electron(self)
-            self.velocity += force * dt / self.mass  # Apply force using Newton's second law
-
-        # ... (other updates)
+            self.velocity += force * dt / self.mass

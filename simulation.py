@@ -1,6 +1,7 @@
 import threading
 
 from datastoreObserver import DataStoreObserver
+from moleculeFactory import create_molecules  # Import the function
 from perfmonObserver import PerformanceMonitoringObserver
 from visualization import visualize_data
 from visualizationdata import VisualizationData
@@ -68,9 +69,7 @@ class Simulation:
         self.state = "Stopped"
 
 # Example usage:
-def create_molecules():
-    # ... (Implementation to create molecules)
-    print("ToDo: create_molecules() in simulation.py")
+
 molecules = create_molecules()  # Create a list of molecules
 simulation = Simulation(molecules, sync_variable=True)
 
