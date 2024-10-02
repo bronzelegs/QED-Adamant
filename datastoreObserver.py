@@ -1,5 +1,5 @@
 # datastore_observer.py
-from mongodb_interface import MongoDBInterface
+from mongodbi import MongoDBInterface
 
 class DataStoreObserver:
     def __init__(self):

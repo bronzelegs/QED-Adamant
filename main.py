@@ -1,11 +1,8 @@
-rom
-simulation
 import time
 
-import Simulation
-import create_molecules
-from condition_monitoring_observer import ConditionMonitoringObserver
-from datastore_observer import DataStoreObserver
+from condmonObserver import ConditionMonitoringObserver
+from datastoreObserver import DataStoreObserver
+from simulation import Simulation, create_molecules
 
 if __name__ == "__main__":
     # Create molecules
