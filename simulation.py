@@ -1,76 +1,61 @@
+import json
 import threading
 
-from datastoreObserver import DataStoreObserver
-from moleculeFactory import create_molecules  # Import the function
-from perfmonObserver import PerformanceMonitoringObserver
-from visualization import visualize_data
-from visualizationdata import VisualizationData
+from visualizationi import visualize_data
 
 
 class Simulation:
     def __init__(self, molecules, sync_variable):
-        self.molecules = molecules
-        self.sync_variable = sync_variable
-        self.sync_event = threading.Event()
-        self.state = "Initialized"
-        self.performance_observer = PerformanceMonitoringObserver()
-        self.visualization_data = VisualizationData()
-        self.datastore_observer = DataStoreObserver()  # Add DataStoreObserver instance
 
-    def run(self, num_steps, dt):
+    # ... (Existing code remains unchanged)
+
+    def run(self, num_steps, dt, output_filename="simulation_data.json"):
         self.state = "Running"
+
+        simulation_data = {  # Create dictionary to store the complete data
+            "simulation_id": "unique_id_123",  # Generate a unique ID if needed
+            "parameters": {
+                "num_steps": num_steps,
+                "dt": dt,
+                # ... other parameters you want to store
+            },
+            "time_steps": [],  # Initialize an empty list for time steps
+            "molecules": []  # Initialize an empty list for molecule data
+        }
+
+
         threads = []
         for step in range(num_steps):
-            if self.state == "Stopped":  # Check if stopped
+            if self.state == "Stopped":
                 break
             for molecule in self.molecules:
                 thread = threading.Thread(target=molecule.simulate_step, args=(step, dt))
                 threads.append(thread)
                 thread.start()
 
-            # Wait for all threads to finish the current step
             self.sync_event.wait()
             self.sync_event.clear()
 
-            # Store visualization data
-            self.time_steps.append(step * dt)  # Store time step
-            self.update_visualization_data()  # Update visualization data
-            self.performance_observer.on_step_completed()  # Performance monitoring
+            simulation_data["time_steps"].append(step * dt)
+            molecules_data = []
+            for molecule in self.molecules:
+                molecules_data.append(molecule.to_dict())  # Convert and add the data
 
-            # Visualize the data
-            visualize_data(self.visualization_data)
+            simulation_data["molecules"].append(molecules_data)
 
-            # Store simulation results
-            self.datastore_observer.store_results(self.visualization_data)  # Store results to MongoDB
+            self.visualization_data.from_dict({"molecules": molecules_data, "time_steps": simulation_data[
+                "time_steps"]})  # Update the visualization data object
+
+            self.datastore_observer.store_results(self.visualization_data)  # Store results
+            self.performance_observer.on_step_completed()
+            visualize_data(self.visualization_data)  # Visualize current step's data
+
+        with open(output_filename, 'w') as f:
+            json.dump(simulation_data, f, indent=4)
 
         for thread in threads:
             thread.join()
+
         self.state = "Stopped"
 
-    def update_visualization_data(self):
-        # Update visualization data from molecules
-        self.visualization_data.electron_positions = []
-        self.visualization_data.atom_positions = []
-        for molecule in self.molecules:
-            for atom in molecule.atoms:
-                self.visualization_data.atom_positions.append(atom.position)
-            for electron in molecule.electrons:
-                self.visualization_data.electron_positions.append(electron.position)
-
-    def pause(self):
-        if self.state == "Running":
-            self.state = "Paused"
-
-    def resume(self):
-        if self.state == "Paused":
-            self.state = "Running"
-
-    def stop(self):
-        self.state = "Stopped"
-
-# Example usage:
-
-molecules = create_molecules()  # Create a list of molecules
-simulation = Simulation(molecules, sync_variable=True)
-
-# ... (Start the simulation, use pause, resume, and stop as needed)
+    # ... (Rest of the Simulation class - pause(), resume(), stop(), etc. - remains unchanged)

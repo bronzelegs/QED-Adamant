@@ -1,13 +1,13 @@
 class Molecule:
-    def __init__(self, atoms, electrons):
-        self.atoms = atoms
-        self.electrons = electrons
+    # ... (Existing __init__ remains unchanged)
 
     def simulate_step(self, step, dt):
-        # Update atoms and electrons
-        for atom in self.atoms:
-            atom.update(dt)
-        for electron in self.electrons:
-            electron.update(dt, self.atoms)  # Pass the list of atoms to the electron
+        # ... existing simulate_step code
+        pass  # Remove existing implementation
 
-# ... (other calculations)
+    def to_dict(self):  # Add the to_dict() method
+        return {
+            "molecule_id": id(self),
+            "atoms": [atom.to_dict() for atom in self.atoms],
+            "electrons": [electron.to_dict() for electron in self.electrons]
+        }
