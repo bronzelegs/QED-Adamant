@@ -1,7 +1,4 @@
-import numpy as np
-
-from eigenvector import Eigenvector
-
+import threading
 
 class Electron:
     def __init__(self, mass, position, velocity, charge=-1, wavefunction_coefficients=None):
@@ -12,8 +9,12 @@ class Electron:
         if wavefunction_coefficients is not None:
             self.eigenvector = Eigenvector(wavefunction_coefficients)
 
-    def update(self, dt, atoms):  # The atoms list is passed as a parameter
-        self.position += self.velocity * dt
+    lock = threading.Lock()  # Add a lock to protect the update method
+
+    def update(self, dt, atoms):
+        with self.lock:  # Acquire the lock before updating
+            self.position += self.velocity * dt
+            # ... other update logic (force calculations, etc.)
 
         # Calculate force due to atoms
         for atom in atoms:
@@ -33,3 +34,21 @@ class Electron:
         if hasattr(self, "eigenvector"):
             electron_data["eigenvector"] = self.eigenvector.to_dict()
         return electron_data
+
+
+import numpy as np
+from eigenvector import Eigenvector
+import threading
+
+
+class Electron:
+    # ... (Existing code remains unchanged)
+
+    lock = threading.Lock()  # Add a lock to protect the update method
+
+    def update(self, dt, atoms):
+        with self.lock:  # Acquire the lock before updating
+            self.position += self.velocity * dt
+            # ... other update logic (force calculations, etc.)
+
+    # ... (Other methods remain unchanged)

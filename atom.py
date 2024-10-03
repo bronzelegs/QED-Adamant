@@ -12,10 +12,12 @@ class Atom:
         self.charge = charge
         self.electrons = []
 
-    def update(self, dt):
-        self.position += self.velocity * dt
-        # ... (Add other physics updates for the atom here, e.g., force calculations)
+    lock = threading.Lock()  # Add a lock to protect the update method
 
+    def update(self, dt):
+        with self.lock:  # Acquire the lock before updating
+            self.position += self.velocity * dt
+            # ... other update logic
     def calculate_force_on_electron(self, electron):
         distance_vector = electron.position - self.position
         distance = np.linalg.norm(distance_vector)
